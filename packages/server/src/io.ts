@@ -82,7 +82,7 @@ function attachSessionUserHandlers(socket: Socket<ClientToServerEvents, ServerTo
         service: 'internal',
         name: 'No stream data available.',
         description: '',
-        onlineSince: new Date(),
+        onlineSince: new Date().toISOString(),
         offlineSince: null,
       })
     }

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { countSince } from './utils/countSince'
 
-export const DurationSince: React.VFC<{ since: Date | null }> = ({ since }) => {
+export const DurationSince: React.VFC<{ since: string | null }> = ({ since }) => {
   const [counted, setCounted] = useState('')
 
   const updateCounted = useCallback(() => {

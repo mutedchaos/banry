@@ -8,6 +8,6 @@ export function sortStreams(streams: StreamStatus[], key: 'onlineSince' | 'offli
     if (!a) return 1
     if (!b) return 0
 
-    return b.valueOf() - a.valueOf()
+    return new Date(b).valueOf() - new Date(a).valueOf()
   })
 }

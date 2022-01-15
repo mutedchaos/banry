@@ -11,6 +11,10 @@ export const appConfig = {
   corsFrom: process.env.CORS_FROM,
   publicDir: process.env.PUBLIC_DIR,
   testIntegrationKey: process.env.TEST_INTEGRATION_KEY,
+  twitchClientId: process.env.TWITCH_CLIENT_ID,
+  twitchSecret: process.env.TWITCH_SECRET,
+  twitchControlKey: process.env.TWITCH_CONTROL_KEY,
+  twitchEventsubSecret: process.env.TWITCH_EVENTSUB_SECRET,
 }
 
 function getEnv(name: string) {
