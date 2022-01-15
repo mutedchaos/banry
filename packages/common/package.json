@@ -1,0 +1,19 @@
+{
+  "name": "@banry/common",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "prepare": "rm -rf lib && npm run build",
+    "build": "tsc --project tsconfig.json"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  },
+  "exports": {
+    ".": "./lib/index.js"
+  }
+}
