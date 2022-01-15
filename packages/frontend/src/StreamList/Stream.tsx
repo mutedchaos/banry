@@ -35,10 +35,14 @@ const InternalContainer = styled.div`
   background: lightgray;
   color: black;
 `
-
+const TestContainer = styled.div`
+  background: orange;
+  color: black;
+`
 const serviceContainers = new Map([
   ['twitch', TwitchContainer],
   ['internal', InternalContainer],
+  ['test', TestContainer],
 ])
 
 export function Stream({ stream, online }: Props) {

@@ -23,17 +23,18 @@ export function connectIO(server: HttpServer) {
 
   io.on('connection', (socket) => {
     console.log('Client connected')
-    socket.rooms.add(ROOM_UNAUTHENTICATED)
+    socket.join(ROOM_UNAUTHENTICATED)
 
     socket.on('loginWithPassword', (data) => {
       console.log('Login request.')
       if (data.password === appConfig.validPassword) {
         console.log('Login success')
-        socket.rooms.delete(ROOM_UNAUTHENTICATED)
 
         const userId = defaultUserId
+        socket.leave(ROOM_UNAUTHENTICATED)
 
-        socket.rooms.add(ROOM_USERS)
+        socket.join(ROOM_USERS)
+        socket.join(getUserRoom(userId))
         socket.rooms.add(getUserRoom(userId))
         socket.emit('sessionStatusUpdate', { loggedInAs: userId, token: createToken(userId) })
 
@@ -49,10 +50,10 @@ export function connectIO(server: HttpServer) {
       try {
         const userId = getUserIdFromToken(data.token)
         console.log('Login success')
-        socket.rooms.delete(ROOM_UNAUTHENTICATED)
+        socket.leave(ROOM_UNAUTHENTICATED)
 
-        socket.rooms.add(ROOM_USERS)
-        socket.rooms.add(getUserRoom(userId))
+        socket.join(ROOM_USERS)
+        socket.join(getUserRoom(userId))
         socket.emit('sessionStatusUpdate', { loggedInAs: userId, token: createToken(userId) })
 
         attachSessionUserHandlers(socket)

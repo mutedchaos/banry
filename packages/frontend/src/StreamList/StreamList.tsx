@@ -1,7 +1,8 @@
+import { isOnline } from '@banry/common'
 import { useContext } from 'react'
 import styled from 'styled-components'
 
-import { dataProviderContext, isOnline } from '../contexts/DataProvider'
+import { dataProviderContext } from '../contexts/DataProvider'
 import { sortStreams } from '../utils/sortStreams'
 import { Stream } from './Stream'
 

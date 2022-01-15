@@ -9,10 +9,6 @@ type Ctx = Array<StreamStatus>
 
 export const dataProviderContext = React.createContext<Ctx>(null as any)
 
-export function isOnline(stream: StreamStatus) {
-  return !!(stream.onlineSince && (!stream.offlineSince || stream.offlineSince < stream.onlineSince))
-}
-
 export function DataProvider({ children }: { children: ReactNode }) {
   const [statuses, setStatuses] = useState<Ctx | null>(null)
 

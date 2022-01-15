@@ -1,6 +1,7 @@
 import express from 'express'
 
 import { appConfig } from './appConfig'
+import { testIntegrationRouter } from './integrations/test-integration'
 import { connectIO } from './io'
 
 const app = express()
@@ -19,3 +20,5 @@ const server = app.listen(port, () => {
 })
 
 connectIO(server)
+
+app.use('/test', testIntegrationRouter)

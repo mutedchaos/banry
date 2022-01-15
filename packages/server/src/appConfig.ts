@@ -5,9 +5,12 @@ export const appConfig = {
   validPassword: getEnv('VALID_PASSWORD'),
   jwtSecret: getEnv('JWT_SECRET'),
   jwtIdentity: getEnv('JWT_IDENTITY'),
+  redisURL: getEnv('REDIS_URL'),
+
+  // Optional:
   corsFrom: process.env.CORS_FROM,
   publicDir: process.env.PUBLIC_DIR,
-  redisURL: getEnv('REDIS_URL'),
+  testIntegrationKey: process.env.TEST_INTEGRATION_KEY,
 }
 
 function getEnv(name: string) {
