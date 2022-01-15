@@ -1,9 +1,13 @@
+import dotenv from 'dotenv'
+dotenv.config()
+
 export const appConfig = {
   validPassword: getEnv('VALID_PASSWORD'),
   jwtSecret: getEnv('JWT_SECRET'),
   jwtIdentity: getEnv('JWT_IDENTITY'),
   corsFrom: process.env.CORS_FROM,
   publicDir: process.env.PUBLIC_DIR,
+  redisURL: getEnv('REDIS_URL'),
 }
 
 function getEnv(name: string) {

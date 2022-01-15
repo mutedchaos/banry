@@ -5,6 +5,7 @@ import { Server, Socket } from 'socket.io'
 
 import { appConfig, defaultUserId } from './appConfig'
 import { createToken, getUserIdFromToken } from './jwt'
+import { getAllStreamStatuses } from './model/getAllStreamStatuses'
 import { ROOM_UNAUTHENTICATED, ROOM_USERS, getUserRoom } from './rooms'
 
 let io: null | Server<ClientToServerEvents, ServerToClientEvents> = null
@@ -69,13 +70,20 @@ export function getIO() {
 }
 
 function attachSessionUserHandlers(socket: Socket<ClientToServerEvents, ServerToClientEvents>) {
-  socket.on('getStreamStatuses', () => {
-    socket.emit('streamStatusUpdate', {
-      service: 'internal',
-      name: 'No stream data available.',
-      description: '',
-      onlineSince: new Date(),
-      offlineSince: null,
-    })
+  socket.on('getStreamStatuses', async () => {
+    let any = false
+    for await (const streamStatus of getAllStreamStatuses()) {
+      socket.emit('streamStatusUpdate', streamStatus)
+      any = true
+    }
+    if (!any) {
+      socket.emit('streamStatusUpdate', {
+        service: 'internal',
+        name: 'No stream data available.',
+        description: '',
+        onlineSince: new Date(),
+        offlineSince: null,
+      })
+    }
   })
 }

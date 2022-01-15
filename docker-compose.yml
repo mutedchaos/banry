@@ -7,5 +7,10 @@ services:
       VALID_PASSWORD: test
       JWT_SECRET: test
       JWT_IDENTITY: banry-local
+      REDIS_URL: redis://redis:6379
     ports:
       - 3200:3000
+  redis:
+    image: redis:latest
+    ports:
+      - 3201:6379
