@@ -2,7 +2,8 @@ export const appConfig = {
   validPassword: getEnv('VALID_PASSWORD'),
   jwtSecret: getEnv('JWT_SECRET'),
   jwtIdentity: getEnv('JWT_IDENTITY'),
-  corsFrom: getEnv('CORS_FROM'),
+  corsFrom: process.env.CORS_FROM,
+  publicDir: process.env.PUBLIC_DIR,
 }
 
 function getEnv(name: string) {

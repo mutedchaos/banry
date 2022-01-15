@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  banry:
+    build: .
+    init: true
+    environment:
+      VALID_PASSWORD: test
+      JWT_SECRET: test
+      JWT_IDENTITY: banry-local
+    ports:
+      - 3200:3000

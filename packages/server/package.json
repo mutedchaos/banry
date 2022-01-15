@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node -T src/app",
-    "dev": "nodemon -x npm start"
+    "start:prod": "node build/app",
+    "dev": "nodemon -x npm start",
+    "build": "tsc --project tsconfig.json"
   },
   "author": "",
   "license": "ISC",

@@ -49,6 +49,7 @@
   "devDependencies": {
     "@types/humanize-duration": "^3.27.1",
     "@types/luxon": "^2.0.9",
-    "@types/styled-components": "^5.1.20"
+    "@types/styled-components": "^5.1.20",
+    "mini-css-extract-plugin": "2.4.5"
   }
 }

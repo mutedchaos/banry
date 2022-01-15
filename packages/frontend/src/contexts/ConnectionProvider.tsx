@@ -15,7 +15,9 @@ export function ConnectionProvider({ children }: Props) {
   const [connected, setConnected] = useState(false)
   const [connectionId, incrementConnectionId] = useReducer((id) => id + 1, 0)
 
-  const [socket] = useState(() => io(process.env.REACT_APP_WEBSOCKET_ADDRESS || 'ws://localhost:3001'))
+  const suggestedEndpoint = process.env.REACT_APP_WEBSOCKET_ADDRESS || 'ws://localhost:3001'
+
+  const [socket] = useState(() => (suggestedEndpoint === 'self' ? io() : io(suggestedEndpoint)))
 
   useEffect(() => {
     socket.connect()
