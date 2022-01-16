@@ -14,7 +14,7 @@ const HMAC_PREFIX = 'sha256='
 export const authMiddleware: Handler = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization
-    if (appConfig.twitchControlKey && authHeader === `Bearer ${appConfig}`) {
+    if (appConfig.twitchControlKey && authHeader === `Bearer ${appConfig.twitchControlKey}`) {
       return next()
     }
 

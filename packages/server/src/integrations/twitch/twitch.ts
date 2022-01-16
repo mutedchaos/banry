@@ -2,6 +2,7 @@ import express, { Request, Response, Router } from 'express'
 
 import { appConfig } from '../../appConfig'
 import { updateStreamStatus } from '../../model/updateStreamStatus'
+import { addSubscription } from './api/addSubscription'
 import { authMiddleware } from './authMiddleware'
 import { TwitchBody, TwitchChannelUpdate, TwitchStreamOffline, TwitchStreamOnline } from './TwitchBody'
 
@@ -25,7 +26,7 @@ if (!appConfig.twitchClientId || !appConfig.twitchSecret) {
     next()
   })
 
-  router.use<void, '', TwitchBody, void>(async (req, res) => {
+  router.post<void, '', TwitchBody, void>('/hook', async (req, res) => {
     try {
       switch (req.headers['twitch-eventsub-message-type']) {
         case 'notification':
@@ -47,6 +48,17 @@ if (!appConfig.twitchClientId || !appConfig.twitchSecret) {
     res.sendStatus(204)
   })
 }
+
+router.post<void, string, void, { channel: string }>('/add-channel', async (req, res, next) => {
+  try {
+    const { channel } = req.query
+    if (!channel || typeof channel !== 'string') throw new Error('Invalid channel')
+    await addSubscription(channel)
+    res.send('OK!')
+  } catch (err) {
+    next(err)
+  }
+})
 
 function handleCallbackVerification(req: Request<any, any, TwitchBody, any>, res: Response) {
   if (!('challenge' in req.body)) throw new Error('Challenge is missing.')

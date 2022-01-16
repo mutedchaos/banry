@@ -11,9 +11,16 @@ RUN cd packages/common &&  npm i --ignore-scripts
 COPY packages/common ./packages/common/
 RUN cd packages/common && npm run build
 
-FROM common AS server-deps
+FROM common AS common-prod
+RUN cd packages/common && npm prune --production
+
+
+FROM common AS server-prod-deps
 COPY packages/server/package*.json ./packages/server/
-RUN cd packages/server &&  npm i
+RUN cd packages/server && npm i --production
+
+FROM server-prod-deps AS server-deps
+RUN cd packages/server && npm i
 
 FROM common AS frontend-deps
 COPY packages/frontend/package*.json ./packages/frontend/
@@ -28,9 +35,12 @@ COPY packages/server ./packages/server/
 RUN cd packages/server && npm run build
 
 FROM base AS prod
-COPY --from=common /app/packages/common /app/packages/common
+COPY --from=common-prod /app/packages/common /app/packages/common/
 WORKDIR /app/packages/server
-COPY --from=server /app/packages/server ./
+COPY packages/server/package* /app/packages/server/
+COPY --from=server-prod-deps /app/packages/server/node_modules ./node_modules/
+RUN mkdir node_modules/@banry && ln -s ../../../common node_modules/@banry/common
+COPY --from=server /app/packages/server/build ./build/
 COPY --from=frontend /app/packages/frontend/build ./public
 ENV PUBLIC_DIR /app/packages/server/public
 ENV PORT 3000

@@ -1,4 +1,5 @@
 import dotenv from 'dotenv'
+
 dotenv.config()
 
 export const appConfig = {
@@ -6,6 +7,7 @@ export const appConfig = {
   jwtSecret: getEnv('JWT_SECRET'),
   jwtIdentity: getEnv('JWT_IDENTITY'),
   redisURL: getEnv('REDIS_URL'),
+  host: getEnv('HOST'),
 
   // Optional:
   corsFrom: process.env.CORS_FROM,
